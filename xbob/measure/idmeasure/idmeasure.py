@@ -22,6 +22,22 @@ import os, sys
 import numpy
 
 def DIR(cmc_scores, far_list):
+  """Calculates the Detection and Identification Rate from the give input and 
+       a vector of specified false acceptance rates
+    
+    Keyword attributes:
+
+    cmc_scores
+      List of two-element tuples. Each of the tuples contains the negative and 
+      the positive scores for one test item.
+
+    far_list
+      Array of predefined false acceptance rates.
+
+    Return: List of two-element tuples, namely detection and identificatio rate. 
+      Each of the tuples contains the probability that the rank r of the 
+      positive score and the corresponding false acceptance rate. r is computed
+      as the number of negative scores that are higher than the positive score."""
   pos_scores =numpy.array([], dtype=numpy.float64)
   neg_scores =numpy.array([], dtype=numpy.float64)
   for neg,pos in cmc_scores:
@@ -44,6 +60,28 @@ def DIR(cmc_scores, far_list):
   return retval
 
 def DIR_plot(cmc_scores, far_list, logx = True, **kwargs):
+  """Plot the Detection and Identification Rate from the give input and a 
+       vector of specified false acceptance rates
+    
+    Keyword attributes:
+
+    cmc_scores
+      List of two-element tuples. Each of the tuples contains the negative 
+      and the positive scores for one test item.
+
+    far_list
+      Array of predefined false acceptance rates.
+
+    logx
+      Boolean input, if it is true, the x-axis is in log scale.
+
+    kwargs
+      A dictionary of extra plotting parameters, that is passed directly to 
+      matplotlib.pyplot.plot
+
+    Note: This function does not initiate and save the figure instance, it
+          only issues the plotting commands.  Every user is responsible for
+          setting up and saving the figure as it best fits his purpose."""
   try:
     import matplotlib.pyplot as mpl
   except ImportError:

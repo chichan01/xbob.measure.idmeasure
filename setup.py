@@ -28,7 +28,7 @@ setup(
     # This is the basic information about your project. Modify all this
     # information before releasing code publicly.
     name='xbob.measure.idmeasure',
-    version='0.0.2',
+    version='0.0.3',
     description='Detection and Identification Rate',
     url='http://pypi.python.org/pypi/xbob.measure.IDmeasure',
     license='GPLv3',

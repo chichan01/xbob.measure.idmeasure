@@ -2,7 +2,8 @@
 Detection and Identification Rate for Bob
 ===================================================
 
-This example demonstrates how to extend Bob by providing a new performance measurement for measuring the open-set identification
+This example demonstrates how to extend Bob by providing a new performance measurement 
+for measuring the open-set identification
 
 Installation
 ============
@@ -66,9 +67,9 @@ get you a fully operational test and development environment.
 
   The python shell used in the first line of the previous command set
   determines the python interpreter that will be used for all scripts developed
-  inside this package. Because this package makes use of `Bob`_, you must make sure that the ``bootstrap.py``
-  script is called with the **same** interpreter used to build Bob, or
-  unexpected problems might occur.
+  inside this package. Because this package makes use of `Bob`_, you must make sure
+  that the ``bootstrap.py`` script is called with the **same** interpreter used to 
+  build Bob, or unexpected problems might occur.
 
   If Bob is installed by the administrator of your system, it is safe to
   consider it uses the default python interpreter. In this case, the above 3
@@ -89,14 +90,63 @@ User Guide
 It is assumed you have followed the installation instructions for the package
 and got this package installed.
 
-Below, we provide an example of how to appy DIR to plot the DIR curve, from 
+Two functions, DIR and DIR_plot, are in this package to compute and plot the 
+detection and identification rates by given the predefined false acceptance 
+rates.  The descriptions of these function are presented below.
+
+def DIR(cmc_scores, far_list):
+    Calculates the Detection and Identification Rate from the give input and 
+    a vector of specified false acceptance rates
+    
+    Keyword attributes:
+
+    cmc_scores
+      List of two-element tuples. Each of the tuples contains the negative and 
+      the positive scores for one test item.
+
+    far_list
+      Array of predefined false acceptance rates.
+
+    Return: List of two-element tuples, namely detection and identificatio rate. 
+      Each of the tuples contains the probability that the rank r of the 
+      positive score and the corresponding false acceptance rate. r is computed
+      as the number of negative scores that are higher than the positive score.
+
+def DIR_plot(cmc_scores, far_list, logx = True, **kwargs):
+    Plot the Detection and Identification Rate from the give input and a 
+    vector of specified false acceptance rates
+    
+    Keyword attributes:
+
+    cmc_scores
+      List of two-element tuples. Each of the tuples contains the negative 
+      and the positive scores for one test item.
+
+    far_list
+      Array of predefined false acceptance rates.
+
+    logx
+      Boolean input, if it is true, the x-axis is in log scale.
+
+    kwargs
+      A dictionary of extra plotting parameters, that is passed directly to 
+      matplotlib.pyplot.plot
+
+    Note: This function does not initiate and save the figure instance, it
+          only issues the plotting commands.  Every user is responsible for
+          setting up and saving the figure as it best fits his purpose.
+
+Below, we provide an example of how to appy DIR_plot to plot the DIR curve, from 
 the python universe::
 
   >>> import idmeasure
   # predefine a list of false acceptance rates
   >>> FAR=[.01, 0.1, 1]
-  #Read The four column file needs to be in the same format as described in the five_column function,
-  and the "test label" (column 4) has to contain the test/probe file name.  please refer the functions of bob.measure.load.cmc_four_column, bob.measure.load.cmc_five_column to load or generate the "cmc scores".
+  #Read The four column file needs to be in the same format as described in the
+   five_column function, and the "test label" (column 4) has to contain the 
+   test/probe file name.  please refer the functions of 
+   bob.measure.load.cmc_four_column, bob.measure.load.cmc_five_column to load 
+   or generate the "cmc scores".
   >>> idmeasure.DIR_plot(cmc_scores, FAR)
   >>>pyplot.xlabel("Rank")
   >>>pyplot.ylabel("Identification Rate (%)")
